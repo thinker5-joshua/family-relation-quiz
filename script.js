@@ -14,6 +14,11 @@ let relationChain;
 let relationDescription;
 let submitBtn;
 
+// API Key相关元素
+let apiKeyInput;
+let saveApiKeyBtn;
+let clearApiKeyBtn;
+
 // 弹出窗口相关元素
 let resultModal;
 let modalRelationChainText;
@@ -30,6 +35,9 @@ function initApp() {
     
     // 绑定事件监听器
     bindEventListeners();
+    
+    // 绑定API Key事件监听器
+    bindApiKeyEventListeners();
     
     // 设置初始性别
     setGender('male');
@@ -51,6 +59,11 @@ function getDomElements() {
     relationChain = document.getElementById('relationChain');
     relationDescription = document.getElementById('relationDescription');
     submitBtn = document.getElementById('submitBtn');
+    
+    // API Key相关元素
+    apiKeyInput = document.getElementById('apiKeyInput');
+    saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
+    clearApiKeyBtn = document.getElementById('clearApiKeyBtn');
     
     // 弹出窗口相关元素
     resultModal = document.getElementById('resultModal');
@@ -344,10 +357,60 @@ async function submitRelationChain() {
     }
 }
 
+// 保存API Key到localStorage
+function saveApiKey() {
+    const apiKey = apiKeyInput.value.trim();
+    if (apiKey) {
+        localStorage.setItem('deepseekApiKey', apiKey);
+        alert('API Key已保存');
+    } else {
+        alert('请输入API Key');
+    }
+}
+
+// 清除API Key
+function clearApiKey() {
+    localStorage.removeItem('deepseekApiKey');
+    apiKeyInput.value = '';
+    alert('API Key已清除');
+}
+
+// 获取API Key
+function getApiKey() {
+    return localStorage.getItem('deepseekApiKey');
+}
+
+// 绑定API Key相关事件监听器
+function bindApiKeyEventListeners() {
+    // 保存API Key按钮点击事件
+    saveApiKeyBtn.addEventListener('click', saveApiKey);
+    
+    // 清除API Key按钮点击事件
+    clearApiKeyBtn.addEventListener('click', clearApiKey);
+    
+    // 按Enter键保存API Key
+    apiKeyInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            saveApiKey();
+        }
+    });
+    
+    // 页面加载时，从localStorage加载API Key
+    const savedApiKey = getApiKey();
+    if (savedApiKey) {
+        apiKeyInput.value = savedApiKey;
+    }
+}
+
 // 调用真实API
 async function callApi(prompt) {
-    // 直接使用DeepSeek API，使用用户提供的API密钥
-    const apiKey = "sk-b160bd7b70954be1b8b56208b88679d5";
+    // 获取API Key
+    const apiKey = getApiKey();
+    
+    if (!apiKey) {
+        throw new Error('请先输入DeepSeek API Key');
+    }
+    
     const model = "deepseek-chat";
     
     // DeepSeek API的真实调用

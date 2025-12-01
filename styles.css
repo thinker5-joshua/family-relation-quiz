@@ -444,6 +444,40 @@ h3 {
     font-weight: 500;
 }
 
+/* API Key输入样式 */
+.api-key-input {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.api-key-input-field {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.api-key-input-field:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.api-key-hint {
+    margin: 5px 0 0 0;
+    font-size: 0.75rem;
+    color: #666;
+    font-style: italic;
+    line-height: 1.4;
+}
+
 /* 页脚样式 */
 .page-footer {
     padding: 15px;

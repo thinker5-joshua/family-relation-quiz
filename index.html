@@ -84,7 +84,13 @@
 
             <!-- 大模型说明 -->
             <section class="model-info">
-                <p class="info-text">当前使用DeepSeek大模型，已配置API密钥，可直接使用。</p>
+                <p class="info-text">当前使用DeepSeek大模型，请输入您的API密钥：</p>
+                <div class="api-key-input">
+                    <input type="password" id="apiKeyInput" placeholder="请输入DeepSeek API Key" class="api-key-input-field">
+                    <button class="btn btn-primary" id="saveApiKeyBtn">保存</button>
+                    <button class="btn btn-secondary" id="clearApiKeyBtn">清除</button>
+                </div>
+                <p class="api-key-hint">提示：API Key将存储在本地浏览器中，不会上传到服务器</p>
             </section>
         </main>
 
