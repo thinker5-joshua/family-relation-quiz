@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家庭称呼问答器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面标题 -->
+        <header class="page-header">
+            <h1>家庭称呼问答器</h1>
+            <p class="subtitle">轻松查询复杂的家庭关系称呼</p>
+        </header>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 性别选择 -->
+            <section class="gender-section">
+                <div class="gender-row">
+                    <h2>请选择您的性别：</h2>
+                    <div class="gender-options">
+                        <label class="gender-option">
+                            <input type="radio" name="gender" value="male" checked>
+                            <span class="gender-label">男性</span>
+                        </label>
+                        <label class="gender-option">
+                            <input type="radio" name="gender" value="female">
+                            <span class="gender-label">女性</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 关系链条构造器 -->
+            <section class="relation-builder">
+                <h2>构造亲戚关系链条</h2>
+                
+                <div class="relation-builder-container">
+                    <!-- 左侧：当前关系链条 -->
+                    <div class="relation-chain-section">
+                        <div class="current-relation">
+                            <div class="relation-chain-header">
+                                <h3>当前关系链条：</h3>
+                                <div class="chain-actions">
+                                    <button class="btn btn-secondary" id="backBtn">回退</button>
+                                    <button class="btn btn-secondary" id="clearChainBtn">清空链条</button>
+                                </div>
+                            </div>
+                            <div class="relation-chain" id="relationChain">
+                                <span class="chain-node start-node">我</span>
+                            </div>
+                            <!-- 关系链文字描述 -->
+                            <div class="relation-description" id="relationDescription">
+                                当前关系链：我
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧：添加关系 -->
+                    <div class="add-relation-section">
+                        <h3>添加关系：</h3>
+                        <div class="relation-buttons" id="relationButtons">
+                            <button class="relation-btn" data-relation="父亲">父亲</button>
+                            <button class="relation-btn" data-relation="母亲">母亲</button>
+                            <button class="relation-btn" data-relation="哥哥">哥哥</button>
+                            <button class="relation-btn" data-relation="弟弟">弟弟</button>
+                            <button class="relation-btn" data-relation="姐姐">姐姐</button>
+                            <button class="relation-btn" data-relation="妹妹">妹妹</button>
+                            <button class="relation-btn" data-relation="儿子">儿子</button>
+                            <button class="relation-btn" data-relation="女儿">女儿</button>
+                            <button class="relation-btn" data-relation="妻子">妻子</button>
+                            <button class="relation-btn" data-relation="丈夫">丈夫</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 提交区域 -->
+            <section class="submit-result">
+                <button class="btn btn-large btn-submit" id="submitBtn">查询称呼</button>
+            </section>
+
+            <!-- 大模型说明 -->
+            <section class="model-info">
+                <p class="info-text">当前使用DeepSeek大模型，已配置API密钥，可直接使用。</p>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="page-footer">
+            <p>家庭称呼问答器 &copy; 2025</p>
+        </footer>
+    </div>
+
+    <!-- 结果弹出窗口 -->
+    <div id="resultModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>查询结果</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-relation-chain">
+                    <h3>关系链条：</h3>
+                    <p id="modalRelationChainText">我的父亲的父亲</p>
+                </div>
+                <div class="modal-result">
+                    <div class="result-item">
+                        <span class="result-label">我称呼对方：</span>
+                        <span class="result-value" id="modalMyCall">爷爷</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">对方称呼我：</span>
+                        <span class="result-value" id="modalTheirCall">孙子</span>
+                    </div>
+                </div>
+                <div class="modal-explanation">
+                    <h3>解释说明：</h3>
+                    <p id="modalExplanation">您的父亲的父亲是您的爷爷，爷爷称呼您为孙子。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalBackBtn">返回</button>
+                <button class="btn btn-primary" id="modalCopyBtn">复制分享</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
