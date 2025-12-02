@@ -18,6 +18,10 @@ let submitBtn;
 let apiKeyInput;
 let saveApiKeyBtn;
 let clearApiKeyBtn;
+let apiKeyStatus;
+let statusIndicator;
+let statusText;
+let detailedStatus;
 
 // 弹出窗口相关元素
 let resultModal;
@@ -64,6 +68,10 @@ function getDomElements() {
     apiKeyInput = document.getElementById('apiKeyInput');
     saveApiKeyBtn = document.getElementById('saveApiKeyBtn');
     clearApiKeyBtn = document.getElementById('clearApiKeyBtn');
+    apiKeyStatus = document.getElementById('apiKeyStatus');
+    statusIndicator = document.getElementById('statusIndicator');
+    statusText = document.getElementById('statusText');
+    detailedStatus = document.getElementById('detailedStatus');
     
     // 弹出窗口相关元素
     resultModal = document.getElementById('resultModal');
@@ -357,14 +365,32 @@ async function submitRelationChain() {
     }
 }
 
+// 更新API Key状态显示
+function updateApiKeyStatus() {
+    const apiKey = getApiKey();
+    if (apiKey) {
+        // API Key已设置
+        apiKeyStatus.classList.add('valid');
+        statusText.textContent = 'API Key已设置，可以使用，有需要时可以自行更换';
+        detailedStatus.textContent = 'API Key已设置，可以使用，有需要时可以自行更换';
+    } else {
+        // API Key未设置
+        apiKeyStatus.classList.remove('valid');
+        statusText.textContent = '未设置API Key，设置后才能获取查询结果';
+        detailedStatus.textContent = '未设置API Key，设置后才能获取查询结果';
+    }
+}
+
 // 保存API Key到localStorage
 function saveApiKey() {
     const apiKey = apiKeyInput.value.trim();
     if (apiKey) {
         localStorage.setItem('deepseekApiKey', apiKey);
-        alert('API Key已保存');
+        updateApiKeyStatus();
+        // 显示更友好的提示
+        showNotification('API Key已成功保存，您现在可以进行查询了！', 'success');
     } else {
-        alert('请输入API Key');
+        showNotification('请输入有效的API Key', 'error');
     }
 }
 
@@ -372,7 +398,8 @@ function saveApiKey() {
 function clearApiKey() {
     localStorage.removeItem('deepseekApiKey');
     apiKeyInput.value = '';
-    alert('API Key已清除');
+    updateApiKeyStatus();
+    showNotification('API Key已成功清除', 'info');
 }
 
 // 获取API Key
@@ -400,6 +427,9 @@ function bindApiKeyEventListeners() {
     if (savedApiKey) {
         apiKeyInput.value = savedApiKey;
     }
+    
+    // 初始化API Key状态显示
+    updateApiKeyStatus();
 }
 
 // 调用真实API
@@ -408,7 +438,7 @@ async function callApi(prompt) {
     const apiKey = getApiKey();
     
     if (!apiKey) {
-        throw new Error('请先输入DeepSeek API Key');
+        throw new Error('未设置API Key，设置后才能获取查询结果');
     }
     
     const model = "deepseek-chat";
@@ -633,6 +663,48 @@ function hideResultModal() {
 function displayResult(result) {
     // 显示弹出窗口
     showResultModal(result);
+}
+
+// 显示通知
+function showNotification(message, type = 'info') {
+    // 创建通知元素
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // 设置样式
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: white;
+        background-color: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    `;
+    
+    // 添加到页面
+    document.body.appendChild(notification);
+    
+    // 显示通知
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // 3秒后自动隐藏
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        // 动画结束后移除元素
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 3000);
 }
 
 // 复制分享内容

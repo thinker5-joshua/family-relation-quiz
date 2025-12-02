@@ -445,37 +445,163 @@ h3 {
 }
 
 /* API Key输入样式 */
+.model-info {
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+.api-config {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.api-config-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.api-config-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #333;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.api-key-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #856404;
+    transition: all 0.3s ease;
+}
+
+.api-key-status.valid {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #dc3545;
+    transition: all 0.3s ease;
+}
+
+.api-key-status.valid .status-indicator {
+    background-color: #28a745;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+#statusText {
+    font-weight: 500;
+}
+
 .api-key-input {
     display: flex;
     gap: 10px;
-    margin: 10px 0;
-    flex-wrap: wrap;
-    justify-content: center;
+    margin-bottom: 15px;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .api-key-input-field {
     flex: 1;
-    min-width: 200px;
-    padding: 10px;
+    min-width: 250px;
+    padding: 12px 15px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.3s ease;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #fff;
 }
 
 .api-key-input-field:focus {
+    outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
 }
 
-.api-key-hint {
-    margin: 5px 0 0 0;
-    font-size: 0.75rem;
+.api-key-info {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    border-left: 4px solid #667eea;
+    margin-top: 15px;
+}
+
+.api-key-hint,
+.api-key-help,
+.api-key-security {
+    font-size: 0.85rem;
     color: #666;
-    font-style: italic;
-    line-height: 1.4;
+    margin: 0 0 10px 0;
+    line-height: 1.6;
+}
+
+.api-key-hint:last-child,
+.api-key-help:last-child,
+.api-key-security:last-child {
+    margin-bottom: 0;
+}
+
+.api-key-help a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.api-key-help a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.api-key-hint strong,
+.api-key-help strong,
+.api-key-security strong {
+    color: #333;
+    font-weight: 600;
+}
+
+#detailedStatus {
+    color: #667eea;
+    font-weight: 500;
+}
+
+.api-key-status.valid #detailedStatus {
+    color: #155724;
 }
 
 /* 页脚样式 */
